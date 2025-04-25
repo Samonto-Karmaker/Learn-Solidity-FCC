@@ -15,5 +15,8 @@
     "hardhat": "^2.23.0",
     "prettier": "^3.5.3",
     "prettier-plugin-solidity": "^1.4.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }

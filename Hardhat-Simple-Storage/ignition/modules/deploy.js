@@ -17,12 +17,22 @@ const main = async () => {
             await tx.wait(6)
             await verify(contract.target, [])
         }
-        // const currentValue = await contract.str();
-        // console.log(`Current value: ${currentValue}`);
-        // const txResponse = await contract.setStr("Hello world");
-        // await txResponse.wait(1);
-        // const newValue = await contract.str();
-        // console.log(`Updated value: ${newValue}`);
+
+        // Interact with the contract
+        // pure and view functions do not require a transaction, so we can call them directly
+        const currentValue = await contract.retrieve()
+        console.log("Current value:", currentValue)
+
+        // Other functions require a transaction, so we need to send a transaction
+        // and wait for it to be mined
+        console.log("Storing value...")
+        const transactionResponse = await contract.store(42)
+        const transactionReceipt = await transactionResponse.wait(1)
+        const updatedValue = await contract.retrieve()
+        console.log("Updated value:", updatedValue)
+        console.log("Transaction receipt:", transactionReceipt)
+        console.log("Transaction hash:", transactionReceipt.transactionHash)
+        console.log("Block number:", transactionReceipt.blockNumber)
     } catch (err) {
         console.log(err)
     }

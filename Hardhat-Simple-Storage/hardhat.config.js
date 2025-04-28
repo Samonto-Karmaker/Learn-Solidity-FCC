@@ -1,6 +1,7 @@
 // imports
 require("@nomicfoundation/hardhat-toolbox")
 require("@nomicfoundation/hardhat-verify")
+require("hardhat-gas-reporter")
 require("./tasks/block-number")
 require("dotenv").config()
 /** @type import('hardhat/config').HardhatUserConfig */

@@ -6,7 +6,7 @@ const main = async () => {
     console.log("Deploying contract...")
     try {
         const contractFactory = await ethers.getContractFactory("FundMe")
-        const contract = await contractFactory.deploy()
+        const contract = await contractFactory.deploy(process.env.PRICE_FEED_CONTRACT)
         console.log("Contract deployed:", contract.target)
         if (
             network.config.chainId === 11155111 &&

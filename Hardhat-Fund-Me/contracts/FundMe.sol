@@ -14,8 +14,11 @@ contract FundMe {
     mapping(address => uint256) public addressToAmountFunded;
     address[] public funders;
 
-    constructor() {
-        i_owner = msg.sender; // Now, owner is one who deployed the contract
+    AggregatorV3Interface private priceFeed;
+
+    constructor(address priceFeedAddress) {
+        i_owner = msg.sender;
+        priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
     modifier onlyOwner() {
@@ -26,7 +29,7 @@ contract FundMe {
     }
 
     function fund() public payable {
-        require(msg.value.getConversionRate() >= MINIMUM_FUND_USD, "Amount too low");
+        require(msg.value.getConversionRate(priceFeed) >= MINIMUM_FUND_USD, "Amount too low");
         addressToAmountFunded[msg.sender] += msg.value;
         funders.push(msg.sender);
     }

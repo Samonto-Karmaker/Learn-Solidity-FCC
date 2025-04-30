@@ -45,6 +45,10 @@ contract FundMe {
         require(success, "Failed to withdraw money");
     }
 
+    function getPriceFeed() public view returns (address) {
+        return address(priceFeed);
+    }
+
     // What if users try to fund us without calling the fund function?
     // e.g. Sending Ether through MetaMask?
     // To handle this issue, we need a receive function

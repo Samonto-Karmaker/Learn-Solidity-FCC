@@ -1,7 +1,11 @@
+import { contractABI, contractAddress } from "./constents.js";
 import { ethers } from "./ether-5.6.esm.min.js";
 
 const connectButton = document.getElementById("connectButton");
+const fundButton = document.getElementById("fundButton");
+
 connectButton.addEventListener("click", connectMetaMask);
+fundButton.addEventListener("click", fundAccount);
 
 async function connectMetaMask() {
     if (typeof window.ethereum !== "undefined") {
@@ -21,6 +25,28 @@ async function connectMetaMask() {
             console.error("Error connecting to MetaMask:", error);
             alert("Error connecting to MetaMask. Please try again.");
         }
+    } else {
+        alert(
+            "MetaMask is not installed. Please install it to use this feature."
+        );
+        connectButton.innerText = "Install MetaMask";
+        connectButton.style.backgroundColor = "#f44336"; // Red background
+    }
+}
+
+async function fundAccount() {
+    const ethAmount = document.getElementById("ethAmount")
+        ? document.getElementById("ethAmount").value
+        : 0;
+    console.log(`Funding with ${ethAmount} ETH`);
+    if (typeof window.ethereum !== "undefined") {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const contract = new ethers.Contract(
+            contractAddress,
+            contractABI,
+            provider
+        );
+        console.log("Contract:", contract);
     } else {
         alert(
             "MetaMask is not installed. Please install it to use this feature."

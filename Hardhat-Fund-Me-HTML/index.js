@@ -3,9 +3,11 @@ import { ethers } from "./ether-5.6.esm.min.js";
 
 const connectButton = document.getElementById("connectButton");
 const fundButton = document.getElementById("fundButton");
+const balanceButton = document.getElementById("getBalanceButton");
 
 connectButton.addEventListener("click", connectMetaMask);
 fundButton.addEventListener("click", fundAccount);
+balanceButton.addEventListener("click", getBalance);
 
 async function connectMetaMask() {
     if (typeof window.ethereum !== "undefined") {
@@ -58,7 +60,32 @@ async function fundAccount() {
             alert("Funding successful!");
         } catch (error) {
             console.error("Error funding account:", error);
-            alert("Error funding account. Please check the console for details.");
+            alert(
+                "Error funding account. Please check the console for details."
+            );
+        }
+    } else {
+        alert(
+            "MetaMask is not installed. Please install it to use this feature."
+        );
+        connectButton.innerText = "Install MetaMask";
+        connectButton.style.backgroundColor = "#f44336"; // Red background
+    }
+}
+
+async function getBalance() {
+    if (typeof window.ethereum !== "undefined") {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        try {
+            const balance = await provider.getBalance(contractAddress);
+            const balanceInEth = ethers.utils.formatEther(balance);
+            console.log("Contract balance:", balanceInEth, "ETH");
+            alert(`Contract balance: ${balanceInEth} ETH`);
+        } catch (error) {
+            console.error("Error getting balance:", error);
+            alert(
+                "Error getting balance. Please check the console for details."
+            );
         }
     } else {
         alert(

@@ -4,10 +4,12 @@ import { ethers } from "./ether-5.6.esm.min.js";
 const connectButton = document.getElementById("connectButton");
 const fundButton = document.getElementById("fundButton");
 const balanceButton = document.getElementById("getBalanceButton");
+const withdrawButton = document.getElementById("withdrawButton");
 
 connectButton.addEventListener("click", connectMetaMask);
 fundButton.addEventListener("click", fundAccount);
 balanceButton.addEventListener("click", getBalance);
+withdrawButton.addEventListener("click", withdraw);
 
 async function connectMetaMask() {
     if (typeof window.ethereum !== "undefined") {
@@ -93,5 +95,29 @@ async function getBalance() {
         );
         connectButton.innerText = "Install MetaMask";
         connectButton.style.backgroundColor = "#f44336"; // Red background
+    }
+}
+
+async function withdraw() {
+    if (typeof window.ethereum !== "undefined") {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+            contractAddress,
+            contractABI,
+            signer
+        );
+        try {
+            const tx = await contract.cheaperWithdraw();
+            console.log("Transaction sent:", tx.hash);
+            await tx.wait();
+            console.log("Transaction mined:", tx.hash);
+            alert("Withdrawal successful!");
+        } catch (error) {
+            console.error("Error withdrawing funds:", error);
+            alert(
+                "Error withdrawing funds. Please check the console for details."
+            );
+        }
     }
 }

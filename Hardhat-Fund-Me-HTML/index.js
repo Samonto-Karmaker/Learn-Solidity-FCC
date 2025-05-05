@@ -38,7 +38,7 @@ async function connectMetaMask() {
 async function fundAccount() {
     const ethAmount = document.getElementById("ethAmount")
         ? document.getElementById("ethAmount").value
-        : 0;
+        : "0.01"; // Default value if input is not found
     console.log(`Funding with ${ethAmount} ETH`);
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -48,7 +48,18 @@ async function fundAccount() {
             contractABI,
             signer
         );
-        console.log("Contract:", contract);
+        try {
+            const tx = await contract.fund({
+                value: ethers.utils.parseEther(ethAmount),
+            });
+            console.log("Transaction sent:", tx);
+            await tx.wait();
+            console.log("Transaction mined:", tx);
+            alert("Funding successful!");
+        } catch (error) {
+            console.error("Error funding account:", error);
+            alert("Error funding account. Please check the console for details.");
+        }
     } else {
         alert(
             "MetaMask is not installed. Please install it to use this feature."

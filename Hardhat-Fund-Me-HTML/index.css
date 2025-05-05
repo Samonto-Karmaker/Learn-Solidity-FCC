@@ -1,0 +1,100 @@
+* {
+    font-family: cursive;
+    font-size: 1rem;
+}
+body {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 20px;
+    margin: auto;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border: #333 solid 1px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    padding-bottom: 10px;
+}
+h1:hover {
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+header button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+header button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.5s ease;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: #333 solid 1px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+}
+button {
+    background-color: blanchedalmond;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+button:disabled:hover {
+    box-shadow: none;
+    transform: none;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+input[type="text"]:focus {
+    border-color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}

@@ -36,6 +36,7 @@ async function connectMetaMask() {
         );
         connectButton.innerText = "Install MetaMask";
         connectButton.style.backgroundColor = "#f44336"; // Red background
+        connectButton.style.color = "#333";
     }
 }
 
@@ -60,6 +61,7 @@ async function fundAccount() {
             await tx.wait();
             console.log("Transaction mined:", tx.hash);
             alert("Funding successful!");
+            document.getElementById("ethAmount").value = ""; // Clear input field
         } catch (error) {
             console.error("Error funding account:", error);
             alert(
@@ -72,6 +74,7 @@ async function fundAccount() {
         );
         connectButton.innerText = "Install MetaMask";
         connectButton.style.backgroundColor = "#f44336"; // Red background
+        connectButton.style.color = "#333";
     }
 }
 
@@ -95,6 +98,7 @@ async function getBalance() {
         );
         connectButton.innerText = "Install MetaMask";
         connectButton.style.backgroundColor = "#f44336"; // Red background
+        connectButton.style.color = "#333";
     }
 }
 
@@ -113,11 +117,19 @@ async function withdraw() {
             await tx.wait();
             console.log("Transaction mined:", tx.hash);
             alert("Withdrawal successful!");
+            getBalance();
         } catch (error) {
             console.error("Error withdrawing funds:", error);
             alert(
                 "Error withdrawing funds. Please check the console for details."
             );
         }
+    } else {
+        alert(
+            "MetaMask is not installed. Please install it to use this feature."
+        );
+        connectButton.innerText = "Install MetaMask";
+        connectButton.style.backgroundColor = "#f44336"; // Red background
+        connectButton.style.color = "#333";
     }
 }

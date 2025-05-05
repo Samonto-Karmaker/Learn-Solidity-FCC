@@ -7,16 +7,21 @@
         <link rel="stylesheet" href="./index.css" />
     </head>
     <body>
-        <div>
+        <header>
+            <h1>Fund Me</h1>
             <button id="connectButton">Connect Wallet</button>
-            <button id="getBalanceButton">Get Balance</button>
-            <button id="withdrawButton">Withdraw</button>
-        </div>
-        <div>
-            <label for="ethAmount">Amount (ETH)</label>
-            <input id="ethAmount" type="text" placeholder="0.01" />
-            <button id="fundButton">Fund</button>
-        </div>
+        </header>
+        <main>
+            <div class="container">
+                <button id="getBalanceButton">Get Balance</button>
+                <button id="withdrawButton">Withdraw</button>
+            </div>
+            <div class="container">
+                <label for="ethAmount">Amount (ETH)</label>
+                <input id="ethAmount" type="text" placeholder="0.01" />
+                <button id="fundButton">Fund</button>
+            </div>
+        </main>
     </body>
     <script src="./index.js" type="module"></script>
 </html>

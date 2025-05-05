@@ -21,6 +21,7 @@ async function connectMetaMask() {
             connectButton.disabled = true;
             connectButton.style.backgroundColor = "#4CAF50"; // Green background
             connectButton.style.color = "#fff"; // White text
+            connectButton.style.cursor = "not-allowed"; // Change cursor to not-allowed
         } catch (error) {
             console.error("Error connecting to MetaMask:", error);
             alert("Error connecting to MetaMask. Please try again.");
@@ -41,10 +42,11 @@ async function fundAccount() {
     console.log(`Funding with ${ethAmount} ETH`);
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
         const contract = new ethers.Contract(
             contractAddress,
             contractABI,
-            provider
+            signer
         );
         console.log("Contract:", contract);
     } else {

@@ -1,4 +1,4 @@
-import { ethers } from "./ethers-5.6.esm.min.js";
+import { ethers } from "./ether-5.6.esm.min.js";
 
 const connectButton = document.getElementById("connectButton");
 connectButton.addEventListener("click", connectMetaMask);

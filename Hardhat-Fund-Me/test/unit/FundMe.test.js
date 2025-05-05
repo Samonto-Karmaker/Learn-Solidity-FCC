@@ -133,5 +133,52 @@ describe("FundMe", function () {
                 "FundMe__NotOwner",
             )
         })
+
+        it("withdraw ETH from a multiple getFunder using cheaper withdraw", async function () {
+            const accounts = await ethers.getSigners()
+            for (let i = 1; i < 6; i++) {
+                const fundMeConnectedContract = await fundMe.connect(
+                    accounts[i],
+                )
+                await fundMeConnectedContract.fund({ value: sendValue })
+            }
+
+            const startingFundMeBalance = await ethers.provider.getBalance(
+                fundMe.target,
+            )
+            const startingDeployerBalance = await ethers.provider.getBalance(
+                deployer.address,
+            )
+
+            const transactionResponse = await fundMe.cheaperWithdraw()
+            const transactionReceipt = await transactionResponse.wait(1)
+            const { gasUsed, gasPrice } = transactionReceipt
+            const gasCost = gasUsed * gasPrice
+
+            const endingFundMeBalance = await ethers.provider.getBalance(
+                fundMe.target,
+            )
+            const endingDeployerBalance = await ethers.provider.getBalance(
+                deployer.address,
+            )
+
+            assert.equal(endingFundMeBalance, 0)
+            assert.equal(
+                endingDeployerBalance.toString(),
+                (
+                    startingFundMeBalance +
+                    startingDeployerBalance -
+                    gasCost
+                ).toString(),
+            )
+
+            expect(fundMe.getFunder(0)).to.be.reverted
+            for (i = 1; i < 6; i++) {
+                assert.equal(
+                    await fundMe.getAddressToAmountFunded(accounts[i].address),
+                    0,
+                )
+            }
+        })
     })
 })

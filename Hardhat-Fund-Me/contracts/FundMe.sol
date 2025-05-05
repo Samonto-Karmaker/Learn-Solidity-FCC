@@ -50,6 +50,20 @@ contract FundMe {
         require(success, "Failed to withdraw money");
     }
 
+    function cheaperWithdraw() public onlyOwner {
+        address[] memory funders = s_funders;
+        for (uint256 i = 0; i < funders.length; i++) {
+            address funder = funders[i];
+            s_addressToAmountFunded[funder] = 0;
+        }
+        s_funders = new address[](0);
+
+        (bool success, ) = payable(msg.sender).call{
+            value: address(this).balance
+        }("");
+        require(success, "Failed to withdraw money");
+    }
+
     // What if users try to fund us without calling the fund function?
     // e.g. Sending Ether through MetaMask?
     // To handle this issue, we need a receive function

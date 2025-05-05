@@ -1,4 +1,4 @@
-import { contractABI, contractAddress } from "./constents.js";
+import { contractABI, contractAddress } from "./constants.js";
 import { ethers } from "./ether-5.6.esm.min.js";
 
 const connectButton = document.getElementById("connectButton");

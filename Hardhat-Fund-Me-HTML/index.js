@@ -52,9 +52,9 @@ async function fundAccount() {
             const tx = await contract.fund({
                 value: ethers.utils.parseEther(ethAmount),
             });
-            console.log("Transaction sent:", tx);
+            console.log("Transaction sent:", tx.hash);
             await tx.wait();
-            console.log("Transaction mined:", tx);
+            console.log("Transaction mined:", tx.hash);
             alert("Funding successful!");
         } catch (error) {
             console.error("Error funding account:", error);

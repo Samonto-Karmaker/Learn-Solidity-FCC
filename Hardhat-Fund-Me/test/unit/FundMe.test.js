@@ -29,14 +29,14 @@ describe("FundMe", function () {
         })
         it("Updates the amount funded data structure", async function () {
             await fundMe.fund({ value: sendValue })
-            const response = await fundMe.addressToAmountFunded(
+            const response = await fundMe.getAddressToAmountFunded(
                 deployer.address,
             )
             assert.equal(response.toString(), sendValue.toString())
         })
-        it("Adds funder to array of getFunder", async function () {
+        it("Adds funder to array of Funders", async function () {
             await fundMe.fund({ value: sendValue })
-            const response = await fundMe.funders(0)
+            const response = await fundMe.getFunder(0)
             assert.equal(response, deployer.address)
         })
     })
@@ -77,7 +77,7 @@ describe("FundMe", function () {
             )
         })
 
-        it("withdraw ETH from a multiple funders", async function () {
+        it("withdraw ETH from a multiple getFunder", async function () {
             const accounts = await ethers.getSigners()
             for (let i = 1; i < 6; i++) {
                 const fundMeConnectedContract = await fundMe.connect(
@@ -115,10 +115,10 @@ describe("FundMe", function () {
                 ).toString(),
             )
 
-            expect(fundMe.funders(0)).to.be.reverted
+            expect(fundMe.getFunder(0)).to.be.reverted
             for (i = 1; i < 6; i++) {
                 assert.equal(
-                    await fundMe.addressToAmountFunded(accounts[i].address),
+                    await fundMe.getAddressToAmountFunded(accounts[i].address),
                     0,
                 )
             }
